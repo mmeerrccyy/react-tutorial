@@ -28,34 +28,33 @@ let store = {
     getState(){
         return this._state;
     },
-    addPost(){
-        let newPost = {
-            msg: this._state.profilePage.newPostText,
-            like_count: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
-    },
-    updateNewPostText(postText){
-        this._state.profilePage.newPostText = postText;
-        this._callSubscriber(this._state);
-    },
-    addMessage(){
-        let newMessage = {
-            id: 10,
-            message: this._state.dialogsPage.newMessageText
-        }
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = '';
-        this._callSubscriber(this._state)
-    },
-    updateNewMessageText(messageText){
-        this._state.dialogsPage.newMessageText = messageText;
-        this._callSubscriber(this._state);
-    },
     subscribe(observer){
         this._callSubscriber = observer;
+    },
+    dispatch(action){
+        if (action.type === 'ADD-POST'){
+            let newPost = {
+                msg: this._state.profilePage.newPostText,
+                like_count: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber(this._state);
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT'){
+            this._state.profilePage.newPostText = action.postText;
+            this._callSubscriber(this._state);
+        } else if (action.type === 'ADD-MESSAGE'){
+            let newMessage = {
+                id: 10,
+                message: this._state.dialogsPage.newMessageText
+            }
+            this._state.dialogsPage.messages.push(newMessage);
+            this._state.dialogsPage.newMessageText = '';
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-TEXT-MESSAGE'){
+            this._state.dialogsPage.newMessageText = action.messageText;
+            this._callSubscriber(this._state);
+        }
     }
 }
 
