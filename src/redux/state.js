@@ -1,3 +1,8 @@
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-TEXT-MESSAGE';
+
 let store = {
     _state: {
         profilePage: {
@@ -32,7 +37,7 @@ let store = {
         this._callSubscriber = observer;
     },
     dispatch(action){
-        if (action.type === 'ADD-POST'){
+        if (action.type === ADD_POST){
             let newPost = {
                 msg: this._state.profilePage.newPostText,
                 like_count: 0
@@ -40,10 +45,10 @@ let store = {
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = '';
             this._callSubscriber(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT'){
+        } else if (action.type === UPDATE_NEW_POST_TEXT){
             this._state.profilePage.newPostText = action.postText;
             this._callSubscriber(this._state);
-        } else if (action.type === 'ADD-MESSAGE'){
+        } else if (action.type === ADD_MESSAGE){
             let newMessage = {
                 id: 10,
                 message: this._state.dialogsPage.newMessageText
@@ -51,12 +56,33 @@ let store = {
             this._state.dialogsPage.messages.push(newMessage);
             this._state.dialogsPage.newMessageText = '';
             this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-NEW-TEXT-MESSAGE'){
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT){
             this._state.dialogsPage.newMessageText = action.messageText;
             this._callSubscriber(this._state);
         }
     }
 }
+
+export const addPostActionCreator = () => {
+    return {
+        type: ADD_POST
+    }
+}
+
+export const updateNewPostTextActionCreator = (text) => {
+    return {type: UPDATE_NEW_POST_TEXT, postText: text}
+}
+
+export const addMessageActionCreator = () => {
+    return {
+        type: ADD_MESSAGE
+    }
+}
+
+export const updateNewMessageTextActionCreator = (text) => {
+    return {type: UPDATE_NEW_MESSAGE_TEXT, messageText: text}
+}
+
 
 export default store;
 window.store = store;
