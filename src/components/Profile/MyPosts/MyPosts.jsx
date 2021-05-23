@@ -15,6 +15,7 @@ const MyPosts = (props) => {
     }
 
     let onPostChange = () => {
+        debugger;
         let text = NewPostElement.current.value;
         props.updateNewPostText(text);
     }
