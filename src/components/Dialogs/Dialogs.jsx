@@ -4,10 +4,9 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 const Dialogs = (props) => {
-    debugger;
 
-    let dialogsElements = props.dialogs.map((el) => (<DialogItem name={el.name} id={el.id}/>));
-    let messagesElements = props.messages.map((el) => (<Message message={el.message}/>))
+    let dialogsElements = props.dialogs.map((el) => (<DialogItem name={el.name} id={el.id} key={el.id} />));
+    let messagesElements = props.messages.map((el) => (<Message message={el.message} key={el.id}/>));
 
     let MessageArea = React.createRef();
 
@@ -33,7 +32,7 @@ const Dialogs = (props) => {
                 <button onClick={addMessage}>Send</button>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default Dialogs;
