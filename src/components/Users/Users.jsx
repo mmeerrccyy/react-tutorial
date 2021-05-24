@@ -3,20 +3,23 @@ import s from "./Users.module.css";
 import * as axios from "axios";
 import userPhoto from "../../assets/images/default_ava.png";
 
-let Users = (props) => {
-    let getUsers = () => {
-        if (props.users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                props.setUsers(response.data.items)
-            })
-        }
+class Users extends React.Component {
+
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
+        super(props);
+
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            this.props.setUsers(response.data.items)
+        })
+
     }
 
-    return (
-        <div>
-            <button onClick={getUsers}>Get Users</button>
-            {
-                props.users.map(u => <div key={u.id}>
+    render() {
+        return (
+            <div>
+                {
+                    this.props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} alt='ava'
@@ -25,14 +28,14 @@ let Users = (props) => {
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(u.id)
+                                    this.props.unfollow(u.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    this.props.follow(u.id)
                                 }}>Follow</button>}
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <span>
                             <div>
                                 {u.name}
@@ -50,10 +53,12 @@ let Users = (props) => {
                             </div>
                         </span>
                     </span>
-                </div>)
-            }
-        </div>
-    )
+                    </div>)
+                }
+            </div>
+        )
+    }
+
 }
 
 export default Users;
